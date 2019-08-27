@@ -32,8 +32,13 @@ namespace Panda.App
             services.AddDbContext<PandaDbContext>(options =>
                 options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
 
-            services.AddIdentity<IdentityUser, IdentityRole>()
-                .AddEntityFrameworkStores<PandaDbContext>().AddDefaultTokenProviders();
+            services.AddIdentity<PandaUser, PandaUserRole>()
+            .AddEntityFrameworkStores<PandaDbContext>()
+            .AddDefaultTokenProviders();
+
+
+            //services.AddIdentity<IdentityUser, IdentityRole>()
+            //    .AddEntityFrameworkStores<PandaDbContext>().AddDefaultTokenProviders();
 
             services.Configure<IdentityOptions>(options =>
             {

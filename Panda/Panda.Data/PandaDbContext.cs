@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Panda.Domain;
 using System;
@@ -13,7 +14,6 @@ namespace Panda.Data
         }
 
         public DbSet<Package> Packages { get; set; }
-
         public DbSet<Receipt> Receipts { get; set; }
 
 

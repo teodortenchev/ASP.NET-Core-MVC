@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Extensions.Logging;
+using Panda.Domain;
 using System.ComponentModel.DataAnnotations;
 using System.Threading.Tasks;
 
@@ -11,13 +12,13 @@ namespace Panda.App.Areas.Identity.Pages.Account
     [AllowAnonymous]
     public class RegisterModel : PageModel
     {
-        private readonly SignInManager<IdentityUser> _signInManager;
-        private readonly UserManager<IdentityUser> _userManager;
+        private readonly SignInManager<PandaUser> _signInManager;
+        private readonly UserManager<PandaUser> _userManager;
         private readonly ILogger<RegisterModel> _logger;
 
         public RegisterModel(
-            UserManager<IdentityUser> userManager,
-            SignInManager<IdentityUser> signInManager,
+            UserManager<PandaUser> userManager,
+            SignInManager<PandaUser> signInManager,
             ILogger<RegisterModel> logger)
         {
             _userManager = userManager;
@@ -63,7 +64,7 @@ namespace Panda.App.Areas.Identity.Pages.Account
             returnUrl = returnUrl ?? Url.Content("~/");
             if (ModelState.IsValid)
             {
-                var user = new IdentityUser { UserName = Input.Username, Email = Input.Email };
+                var user = new PandaUser { UserName = Input.Username, Email = Input.Email };
                 var result = await _userManager.CreateAsync(user, Input.Password);
                 if (result.Succeeded)
                 {
