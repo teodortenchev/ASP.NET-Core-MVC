@@ -1,0 +1,12 @@
+C:\Users\teodo\source\repos\Panda\Panda.Data\bin\Debug\netstandard2.0\Panda.Data.deps.json
+C:\Users\teodo\source\repos\Panda\Panda.Data\bin\Debug\netstandard2.0\Panda.Data.dll
+C:\Users\teodo\source\repos\Panda\Panda.Data\obj\Debug\netstandard2.0\Panda.Data.csprojAssemblyReference.cache
+C:\Users\teodo\source\repos\Panda\Panda.Data\obj\Debug\netstandard2.0\Panda.Data.csproj.CoreCompileInputs.cache
+C:\Users\teodo\source\repos\Panda\Panda.Data\obj\Debug\netstandard2.0\Panda.Data.AssemblyInfoInputs.cache
+C:\Users\teodo\source\repos\Panda\Panda.Data\obj\Debug\netstandard2.0\Panda.Data.AssemblyInfo.cs
+C:\Users\teodo\source\repos\Panda\Panda.Data\bin\Debug\netstandard2.0\Panda.Data.pdb
+C:\Users\teodo\source\repos\Panda\Panda.Data\obj\Debug\netstandard2.0\Panda.Data.dll
+C:\Users\teodo\source\repos\Panda\Panda.Data\obj\Debug\netstandard2.0\Panda.Data.pdb
+C:\Users\teodo\source\repos\Panda\Panda.Data\bin\Debug\netstandard2.0\Panda.Domain.dll
+C:\Users\teodo\source\repos\Panda\Panda.Data\bin\Debug\netstandard2.0\Panda.Domain.pdb
+C:\Users\teodo\source\repos\Panda\Panda.Data\obj\Debug\netstandard2.0\Panda.Data.csproj.CopyComplete
