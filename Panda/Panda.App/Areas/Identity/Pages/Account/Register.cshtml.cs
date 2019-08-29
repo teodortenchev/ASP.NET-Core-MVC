@@ -50,7 +50,7 @@ namespace Panda.App.Areas.Identity.Pages.Account
 
             [DataType(DataType.Password)]
             [Display(Name = "Confirm password")]
-            [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
+            [Compare("Password", ErrorMessage = "The passwords do not match.")]
             public string ConfirmPassword { get; set; }
         }
 
@@ -65,6 +65,9 @@ namespace Panda.App.Areas.Identity.Pages.Account
             if (ModelState.IsValid)
             {
                 var user = new PandaUser { UserName = Input.Username, Email = Input.Email };
+
+                //TODO: Make admin
+
                 var result = await _userManager.CreateAsync(user, Input.Password);
                 if (result.Succeeded)
                 {

@@ -40,3 +40,6 @@ C:\Users\teodo\source\repos\Panda\Panda.App\obj\Debug\netcoreapp2.2\Razor\Areas\
 C:\Users\teodo\source\repos\Panda\Panda.App\obj\Debug\netcoreapp2.2\Razor\Areas\Identity\Pages\_ViewStart.g.cshtml.cs
 C:\Users\teodo\source\repos\Panda\Panda.App\obj\Debug\netcoreapp2.2\Razor\Views\Shared\_CookieConsentPartial.g.cshtml.cs
 C:\Users\teodo\source\repos\Panda\Panda.App\obj\Debug\netcoreapp2.2\Razor\Views\Shared\_LoginPartial.g.cshtml.cs
+C:\Users\teodo\source\repos\Panda\Panda.App\obj\Debug\netcoreapp2.2\Razor\Views\Shared\_HomeNotLoggedPartial.g.cshtml.cs
+C:\Users\teodo\source\repos\Panda\Panda.App\obj\Debug\netcoreapp2.2\Razor\Views\Shared\_HomeLoggedInPartial.g.cshtml.cs
+C:\Users\teodo\source\repos\Panda\Panda.App\obj\Debug\netcoreapp2.2\Razor\Views\Shared\_NavBarPartial.g.cshtml.cs
