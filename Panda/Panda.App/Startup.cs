@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -7,6 +8,8 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Panda.Data;
 using Panda.Domain;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace Panda.App
 {
@@ -29,8 +32,7 @@ namespace Panda.App
             .AddEntityFrameworkStores<PandaDbContext>()
             .AddDefaultTokenProviders();
 
-            //services.AddIdentity<IdentityUser, IdentityRole>()
-            //    .AddEntityFrameworkStores<PandaDbContext>().AddDefaultTokenProviders();
+            services.ConfigureApplicationCookie(options => options.LoginPath = "/Identity/Account/Login/");
 
             services.Configure<IdentityOptions>(options =>
             {
@@ -51,6 +53,22 @@ namespace Panda.App
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
+            //TODO: Don't forget to populate dbo.AspNetRoles with Admin and User
+
+            using (var serviceScope = app.ApplicationServices.CreateScope())
+            {
+                using (var context = serviceScope.ServiceProvider.GetRequiredService<PandaDbContext>())
+                {
+                    if(!context.Roles.Any())
+                    {
+                        context.Roles.Add(new PandaUserRole { Name = "Admin", NormalizedName = "ADMIN" });
+                        context.Roles.Add(new PandaUserRole { Name = "User", NormalizedName = "USER" });
+                        context.SaveChanges();
+                    }
+                }
+            }
+
+
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
@@ -65,9 +83,6 @@ namespace Panda.App
             app.UseHttpsRedirection();
             app.UseStaticFiles();
             app.UseAuthentication();
-
-
-
 
 
             app.UseMvc(routes =>

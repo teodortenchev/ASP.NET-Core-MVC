@@ -1,29 +1,42 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
+﻿using Microsoft.AspNetCore.Mvc;
+using Panda.App.Models.Package;
+using Panda.Data;
 using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
-using Panda.App.Models;
 
 namespace Panda.App.Controllers
 {
     public class HomeController : Controller
     {
+        //TODO: Better create a service. Only doing like this to save time right now
+        private readonly PandaDbContext context;
+
+
+
+        public HomeController(PandaDbContext context)
+        {
+            this.context = context;
+        }
+
         public IActionResult Index()
         {
-            return View();
+            var packagesList = context.Packages.Where(x => x.Recipient.UserName == this.User.Identity.Name)
+                .Select(x => new PackageViewModel
+                {
+                    Id = x.Id,
+                    Description = x.Description,
+                    Status = x.ShippingStatus.ToString()
+                })
+                .ToList();
+
+            return View(packagesList);
         }
 
-        public IActionResult Privacy()
+     
+        public IActionResult NotAuthorized()
         {
-            return View();
+            return this.View();
         }
 
-        [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
-        public IActionResult Error()
-        {
-            return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
-        }
+        
     }
 }

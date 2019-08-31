@@ -1,4 +1,5 @@
 ﻿using System;
+using System.ComponentModel.DataAnnotations;
 
 namespace Panda.Domain
 {
@@ -15,7 +16,7 @@ namespace Panda.Domain
         public PackageStatus ShippingStatus { get; set; }
 
         public DateTime? EstimatedDeliveryDate { get; set; }
-
+       
         public string RecipientId { get; set; }
         public PandaUser Recipient { get; set; }
 

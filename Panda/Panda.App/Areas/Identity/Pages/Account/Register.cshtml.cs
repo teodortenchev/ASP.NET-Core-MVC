@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Extensions.Logging;
 using Panda.Domain;
 using System.ComponentModel.DataAnnotations;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace Panda.App.Areas.Identity.Pages.Account
@@ -15,15 +16,18 @@ namespace Panda.App.Areas.Identity.Pages.Account
         private readonly SignInManager<PandaUser> _signInManager;
         private readonly UserManager<PandaUser> _userManager;
         private readonly ILogger<RegisterModel> _logger;
+        private readonly RoleManager<PandaUserRole> _roleManager;
 
         public RegisterModel(
             UserManager<PandaUser> userManager,
             SignInManager<PandaUser> signInManager,
-            ILogger<RegisterModel> logger)
+            ILogger<RegisterModel> logger,
+            RoleManager<PandaUserRole> roleManager)
         {
             _userManager = userManager;
             _signInManager = signInManager;
             _logger = logger;
+            _roleManager = roleManager;
         }
 
         [BindProperty]
@@ -66,9 +70,18 @@ namespace Panda.App.Areas.Identity.Pages.Account
             {
                 var user = new PandaUser { UserName = Input.Username, Email = Input.Email };
 
-                //TODO: Make admin
-
                 var result = await _userManager.CreateAsync(user, Input.Password);
+                
+                //TODO: Make admin
+                if(_userManager.Users.Count() == 1)
+                {
+                    await _userManager.AddToRoleAsync(user, "Admin");
+                }
+                else
+                {
+                    await _userManager.AddToRoleAsync(user, "User");
+                }
+
                 if (result.Succeeded)
                 {
                     _logger.LogInformation("User created a new account with password.");

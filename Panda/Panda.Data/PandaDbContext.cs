@@ -16,7 +16,6 @@ namespace Panda.Data
         public DbSet<Package> Packages { get; set; }
         public DbSet<Receipt> Receipts { get; set; }
 
-
         protected override void OnModelCreating(ModelBuilder builder)
         {
             builder.Entity<PandaUser>()
