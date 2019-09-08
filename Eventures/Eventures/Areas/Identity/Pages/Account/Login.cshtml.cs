@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.Extensions.Logging;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -15,10 +16,12 @@ namespace Eventures.Areas.Identity.Pages.Account
     public class LoginModel : PageModel
     {
         private readonly SignInManager<User> _signInManager;
+        private readonly ILogger<LoginModel> _logger;
 
-        public LoginModel(SignInManager<User> signInManager)
+        public LoginModel(SignInManager<User> signInManager, ILogger<LoginModel> logger)
         {
-            _signInManager = signInManager;          
+            _signInManager = signInManager;
+            _logger = logger;
         }
 
         [BindProperty]
@@ -72,6 +75,7 @@ namespace Eventures.Areas.Identity.Pages.Account
                 var result = await _signInManager.PasswordSignInAsync(Input.Username, Input.Password, Input.RememberMe, lockoutOnFailure: true);
                 if (result.Succeeded)
                 {
+                    _logger.LogInformation("User logged in.");
                     return LocalRedirect(returnUrl);
                 }            
                 else

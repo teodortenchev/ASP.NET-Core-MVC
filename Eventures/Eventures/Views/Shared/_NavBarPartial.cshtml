@@ -3,86 +3,55 @@
 @inject SignInManager<User> SignInManager
 @inject UserManager<User> UserManager
 
-@if (!this.User.Identity.IsAuthenticated)
-{
     <nav class="navbar navbar-expand-lg navbar-light w-75 mx-auto px-0 font-weight-bold">
         <a class="navbar-brand" href="#">Eventures</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
-        <div class="collapse navbar-collapse d-flex justify-content-between" id="navbarNav">
-            <ul class="navbar-nav">
-                <li class="nav-item active">
-                    <a class="nav-link" href="/">Home</a>
-                </li>
-            </ul>
-            <ul class="navbar-nav">
-                <li class="nav-item active">
-                    <a class="nav-link" href="/Identity/Account/Login">Login</a>
-                </li>
-                <li class="nav-item active">
-                    <a class="nav-link" href="/Identity/Account/Register">Register</a>
-                </li>
-            </ul>
-        </div>
+        @if (!this.User.Identity.IsAuthenticated)
+        {
+
+            <div class="collapse navbar-collapse d-flex justify-content-between" id="navbarNav">
+                <ul class="navbar-nav">
+                    <li class="nav-item active">
+                        <a class="nav-link" href="/">Home</a>
+                    </li>
+                </ul>
+                <ul class="navbar-nav">
+                    <li class="nav-item active">
+                        <a class="nav-link" href="/Identity/Account/Login">Login</a>
+                    </li>
+                    <li class="nav-item active">
+                        <a class="nav-link" href="/Identity/Account/Register">Register</a>
+                    </li>
+                </ul>
+            </div>
+
+        }
+        else if (this.User.IsInRole("User"))
+        {
+
+        }
+        else if (this.User.IsInRole("Admin"))
+        {
+            <div class="collapse navbar-collapse d-flex justify-content-between" id="navbarNav">
+                <ul class="navbar-nav">
+                    <li class="nav-item active">
+                        <a class="nav-link" href="/">Home</a>
+                    </li>
+                    <li class="nav-item active">
+                        <a class="nav-link" href="#">Events(dropdown)</a>
+                    </li>
+                </ul>
+                <ul class="navbar-nav">
+                    <li class="nav-item active">
+                        <a class="nav-link" href="#">Hello @User.Identity.Name</a>
+                    </li>
+                    <li class="nav-item active">
+                        <a class="nav-link" href="#">Logout</a>
+                    </li>
+                </ul>
+            </div>
+        }
+
     </nav>
-}
-else if (this.User.IsInRole("User"))
-{
-    <nav class="navbar navbar-expand-lg navbar-dark bg-eventures">
-        <a class="navbar-brand nav-link-black" href="/">EVENTURES</a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse d-flex justify-content-between" id="navbarNav">
-            <ul class="navbar-nav">
-                <li class="nav-item">
-                    <a class="nav-link nav-link-black active" href="/">Home</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link nav-link-black active" href="/Receipts/Index">Receipts</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link nav-link-black active" href="/Identity/Account/Logout">Logout</a>
-                </li>
-            </ul>
-        </div>
-    </nav>
-}
-else if (this.User.IsInRole("Admin"))
-{
-    <nav class="navbar navbar-expand-lg navbar-dark bg-eventures">
-        <a class="navbar-brand nav-link-black" href="/">EVENTURES</a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
-                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse d-flex justify-content-between" id="navbarNav">
-            <ul class="navbar-nav">
-                <li class="nav-item">
-                    <a class="nav-link nav-link-black active" href="/Packages/Pending">Pending</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link nav-link-black active" href="/Packages/Shipped">Shipped</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link nav-link-black active" href="/Packages/Delivered">Delivered</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link nav-link-black active" href="/Packages/Create">New Package</a>
-                </li>
-            </ul>
-            <ul class="navbar-nav">
-                <li class="nav-item">
-                    <a class="nav-link nav-link-black active" href="/">Home</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link nav-link-black active" href="/Receipts/Index">Receipts</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link nav-link-black active" href="/Identity/Account/Logout">Logout</a>
-                </li>
-            </ul>
-        </div>
-    </nav>
-}

@@ -1,18 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Eventures.Data;
+﻿using Eventures.Data;
 using Eventures.Domain;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using System.Linq;
 
 namespace Eventures
 {
@@ -35,7 +30,7 @@ namespace Eventures
             .AddEntityFrameworkStores<EventuresDbContext>()
             .AddDefaultTokenProviders();
 
-           // services.ConfigureApplicationCookie(options => options.LoginPath = "/Identity/Account/Login/");
+            services.ConfigureApplicationCookie(options => options.LoginPath = "/Identity/Account/Login/");
 
             services.Configure<IdentityOptions>(options =>
             {
