@@ -1,0 +1,58 @@
+﻿@page
+@model LoginModel
+
+@{
+    ViewData["Title"] = "Log in";
+}
+
+
+<h1 class="text-center text-torshia">Login</h1>
+<hr class="bg-eventures w-25 hr-2" />
+<form class="mx-auto w-25" method="post">
+    <div asp-validation-summary="All" class="text-danger"></div>
+    <div class="form-group text-center font-weight-bold">
+        <label asp-for="Input.Username" class="text-torshia">Username</label>
+        <input asp-for="Input.Username" type="text" class="form-control" id="username" placeholder="Username...">
+        <span asp-validation-for="Input.Username" class="text-danger"></span>
+    </div>
+    <div class="form-group text-center font-weight-bold">
+        <label asp-for="Input.Password" class="text-torshia">Password</label>
+        <input asp-for="Input.Password" type="password" class="form-control" id="password" placeholder="Password...">
+        <span asp-validation-for="Input.Password" class="text-danger"></span>
+    </div>
+
+
+
+    <hr class="bg-eventures w-100 hr-2" />
+    <div class="form-group text-center">
+        <div class="checkbox">
+            <label asp-for="Input.RememberMe">
+                <input asp-for="Input.RememberMe" />
+                @Html.DisplayNameFor(m => m.Input.RememberMe)
+            </label>
+        </div>
+    </div>
+    <hr class="bg-eventures w-100 hr-2" />
+
+
+    <div class="form-group text-center">
+        <button type="submit" class="btn btn-primary bg-eventures text-dark">Log in</button>
+    </div>
+    <div class="form-group text-center align-content-around">
+        <p>
+            <a id="forgot-password" asp-page="#">Forgot your password?</a><br />
+            <a asp-page="./Register" asp-route-returnUrl="@Model.ReturnUrl">Register as a new user</a>
+        </p>
+    </div>
+</form>
+
+
+
+
+
+
+
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

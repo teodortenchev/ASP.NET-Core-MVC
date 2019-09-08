@@ -14,5 +14,6 @@ namespace Panda.Domain
         public ICollection<Package> Packages { get; set; }
 
         public ICollection<Receipt> Receipts { get; set; }
+
     }
 }
