@@ -1,10 +1,48 @@
-﻿@{ 
+﻿@using Microsoft.AspNetCore.Identity
+@using Eventures.Domain
+@inject SignInManager<User> SignInManager
+@inject UserManager<User> UserManager
+
+@{
     ViewData["Title"] = "Index";
+    string welcomeLoggedIn = $"Welcome, {User.Identity.Name}!";
+    string welcomeAdmin = $"Welcome, Administrator - {User.Identity.Name}!";
+    string guestMessage = "Eventures - The best ticket service in the world";
+    string bodyAdmin = "Enjoy your work.";
+    string bodyUser = "Eventures wishes you an exciting experience";
 }
 
 <div class="jumbotron bg-eventures w-75 mx-auto">
-    <h1>Eventures - The best ticket service in the world</h1>
+    <h1 class="text-center">
+        @if(!User.Identity.IsAuthenticated)
+        {
+            @guestMessage
+        }
+        else if(User.IsInRole("Admin"))
+        {
+            @welcomeAdmin
+        }
+        else if (User.IsInRole("User"))
+        {
+            @welcomeLoggedIn
+        }
+    </h1>
     <hr class="hr-2 bg-dark" />
-    <h3><a href="/Identity/Account/Login">Login</a> to start "eventing"</h3>
-    <h3><a href="/Identity/Account/Register">Register</a> if you don't have an account</h3>
+    <h3 class="text-center">
+        @if (!User.Identity.IsAuthenticated)
+        {
+        <span>
+            <a href="/Identity/Account/Login">Login</a> to start "eventing"<br />
+            <a href="/Identity/Account/Register">Register</a> if you don't have an account
+        </span>
+        }
+        else if (User.IsInRole("Admin"))
+        {
+            @bodyAdmin
+        }
+        else if (User.IsInRole("User"))
+        {
+            @bodyUser
+        }
+    </h3>
 </div>
