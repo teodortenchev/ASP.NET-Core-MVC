@@ -22,7 +22,16 @@ namespace Eventures.Controllers
         [Authorize]
         public ActionResult All()
         {
-            var eventsViewModel = eventsService.GetAllEvents();
+            var eventsViewModel = eventsService.GetAllEvents()
+                .Select(x => new EventViewModel {
+                    Id = x.Id,
+                    Name = x.Name,
+                    Place  = x.Place,
+                    Start = x.Start.ToString("dd-MMM-yyyy HH:MM:ss"),
+                    End = x.End.ToString("dd-MMM-yyyy HH:MM:ss"),
+                    TotalTickets = x.TotalTickets,
+                    TicketPrice = x.TicketPrice 
+                }).ToList();
 
             return View(eventsViewModel);
             
