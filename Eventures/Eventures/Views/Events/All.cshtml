@@ -1,7 +1,48 @@
-﻿
+﻿@model List<Eventures.Models.EventViewModel>
 @{
     ViewData["Title"] = "All Events";
 }
 
-<h1>All</h1>
 
+    <div class="container-fluid">
+        <h1 class="text-center text-torshia">All Events</h1>
+        <hr class="bg-eventures w-75 hr-2" />
+
+
+        @if (Model.Count == 0)
+        {
+            <h4 class="text-center text-monospace">There are no events.</h4>
+        }
+        else
+        {
+            <table class="table table-hover w-75 mx-auto">
+                <thead>
+                    <tr>
+                        <th scope="col" class="font-weight-bold">#</th>
+                        <th scope="col" class="font-weight-bold">Name</th>
+                        <th scope="col" class="font-weight-bold">Start</th>
+                        <th scope="col" class="font-weight-bold">End</th>
+                        <th scope="col" class="font-weight-bold">Place</th>
+                    </tr>
+                </thead>
+                <tbody>
+
+                    @for (int i = 0; i < Model.Count; i++)
+                    {
+                        <tr>
+                            <th scope="row">@(i + 1)</th>
+                            <td>@Model[i].Name</td>
+                            <td>@Model[i].Start</td>
+                            <td>@Model[i].End</td>
+                            <td>@Model[i].Place</td>
+                        </tr>
+                    }
+
+                </tbody>
+            </table>
+
+        }
+        <hr class="bg-eventures w-75 hr-2" />
+
+
+    </div>
