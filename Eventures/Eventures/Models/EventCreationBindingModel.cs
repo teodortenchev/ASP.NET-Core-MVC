@@ -9,9 +9,12 @@ namespace Eventures.Models
         [StringLength(100, ErrorMessage = "The {0} should be between {2} and {1} characters", MinimumLength = 3)]
         public string Name { get; set; }
 
+        [Required]
         [StringLength(100, ErrorMessage = "The {0} should be between {2} and {1} characters", MinimumLength = 2)]
         public string Place { get; set; }
 
+
+        //TO DO: Compate 
         [Required]
         public DateTime Start { get; set; }
 
