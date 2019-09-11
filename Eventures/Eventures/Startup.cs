@@ -1,5 +1,7 @@
 ﻿using Eventures.Data;
+using Eventures.Data.Seeding;
 using Eventures.Domain;
+using Eventures.Extensions;
 using Eventures.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -49,6 +51,7 @@ namespace Eventures
 
             //Custom services
             services.AddScoped<IEventsService, EventsService>();
+            services.AddScoped<EventuresUserRolesSeeder>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -56,18 +59,7 @@ namespace Eventures
         {
             //TODO: Don't forget to populate dbo.AspNetRoles with Admin and User
 
-            using (var serviceScope = app.ApplicationServices.CreateScope())
-            {
-                using (var context = serviceScope.ServiceProvider.GetRequiredService<EventuresDbContext>())
-                {
-                    if (!context.Roles.Any())
-                    {
-                        context.Roles.Add(new UserRole { Name = "Admin", NormalizedName = "ADMIN" });
-                        context.Roles.Add(new UserRole { Name = "User", NormalizedName = "USER" });
-                        context.SaveChanges();
-                    }
-                }
-            }
+            app.UseDatabaseSeeding();
 
 
             if (env.IsDevelopment())
