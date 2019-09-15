@@ -2,6 +2,6 @@
 {
     public interface ISeeder
     {
-        void Seed();
+        void Seed(EventuresDbContext context);
     }
 }

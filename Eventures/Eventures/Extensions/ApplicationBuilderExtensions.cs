@@ -13,13 +13,15 @@ namespace Eventures.Extensions
         {
             using (var serviceScope = app.ApplicationServices.CreateScope())
             {
+                var context = serviceScope.ServiceProvider.GetRequiredService<EventuresDbContext>();
+
                 Assembly.GetAssembly(typeof(EventuresDbContext))
                     .GetTypes()
                     .Where(type => typeof(ISeeder).IsAssignableFrom(type))
                     .Where(type => type.IsClass)
                     .Select(type => (ISeeder)serviceScope.ServiceProvider.GetRequiredService(type))
                     .ToList()
-                    .ForEach(seeder => seeder.Seed());
+                    .ForEach(seeder => seeder.Seed(context));
             }
         }
     }

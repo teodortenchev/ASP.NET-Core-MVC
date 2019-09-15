@@ -47,18 +47,23 @@ namespace Eventures
                 options.User.RequireUniqueEmail = true;
             });
 
-            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
+            services.AddMvc(options =>
+            {
+                //All post actions will have auto anti forgery token validation
+                options.Filters.Add(new AutoValidateAntiforgeryTokenAttribute());
+            })
+                .SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
 
             //Custom services
             services.AddScoped<IEventsService, EventsService>();
             services.AddScoped<EventuresUserRolesSeeder>();
+            services.AddScoped<EventuresRootAdminSeeder>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
-            //TODO: Don't forget to populate dbo.AspNetRoles with Admin and User
-
+            //Seeds Admin and User roles if Roles table is empty.
             app.UseDatabaseSeeding();
 
 

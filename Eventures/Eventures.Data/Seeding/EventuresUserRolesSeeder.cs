@@ -1,19 +1,12 @@
 ﻿using Eventures.Domain;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace Eventures.Data.Seeding
 {
     public class EventuresUserRolesSeeder : ISeeder
     {
-        private readonly EventuresDbContext context;
-
-        public EventuresUserRolesSeeder(EventuresDbContext context)
-        {
-            this.context = context;
-        }
-
-
-        public void Seed()
+        public void Seed(EventuresDbContext context)
         {
             if (!context.Roles.Any())
             {
