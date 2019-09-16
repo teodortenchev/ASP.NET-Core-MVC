@@ -66,3 +66,5 @@ Or we can exclude a property and bind all others.
 Takes the year from a date input field.
 
 ![enter image description here](https://i.imgur.com/if4wCeq.png)
+
+***Correction:** the failed result must be in an else statement!*
