@@ -1,5 +1,3 @@
-Some useful notes to help myself.
-
 # Forms
 
 **Using display names from the model to populate labels automatically**
@@ -55,3 +53,13 @@ To protect against **CSRF**, auto validation of the anti forgery token can be ad
     public IActionResult Create([FromForm]CreateInputModel input)
     
 FromForm will take the data only from the form. [FromQuery] will only look at the query params and so on.
+
+**Parameter tampering protection / Change which properties to bind**
+
+    public IActionResult Create([Bind("property1, property2, etc")]CreateInputModel input)
+    
+Or we can exclude a property and bind all others.
+
+    public ActionResult Edit([Bind(Exclude = "Age")] ...)
+
+![enter image description here](blob:https://imgur.com/1096573e-5c81-419b-a847-a608ee11c805)
