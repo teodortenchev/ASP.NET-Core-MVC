@@ -62,4 +62,7 @@ Or we can exclude a property and bind all others.
 
     public ActionResult Edit([Bind(Exclude = "Age")] ...)
 
-![enter image description here](blob:https://i.imgur.com/if4wCeq.png)
+**Custom model binder**
+Takes the year from a date input field.
+
+![enter image description here](https://i.imgur.com/if4wCeq.png)
