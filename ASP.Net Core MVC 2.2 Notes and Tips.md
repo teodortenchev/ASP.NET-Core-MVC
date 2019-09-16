@@ -62,4 +62,4 @@ Or we can exclude a property and bind all others.
 
     public ActionResult Edit([Bind(Exclude = "Age")] ...)
 
-![enter image description here](blob:https://imgur.com/1096573e-5c81-419b-a847-a608ee11c805)
+![enter image description here](blob:https://i.imgur.com/if4wCeq.png)
