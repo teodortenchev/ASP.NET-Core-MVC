@@ -70,7 +70,7 @@ Takes the year from a date input field.
 ***Correction:** the failed result must be in an else statement!*
 
 
-# DataValidation
+# Data Validation
 
 **Custom attribute for start and end date**
 

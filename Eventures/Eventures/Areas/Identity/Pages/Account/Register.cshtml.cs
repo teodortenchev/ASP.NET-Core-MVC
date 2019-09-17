@@ -36,6 +36,8 @@ namespace Eventures.Areas.Identity.Pages.Account
         {
             [Required]
             [Display(Name = "Username")]
+            [RegularExpression("^[A-Za-z0-9]+(?:[\\*~._-][A-Za-z0-9]+)*$")]
+            [MinLength(3, ErrorMessage = "The {0} must be at least {1} characters.")]
             public string Username { get; set; }
 
             [Required]
@@ -44,7 +46,7 @@ namespace Eventures.Areas.Identity.Pages.Account
             public string Email { get; set; }
 
             [Required]
-            [StringLength(100, ErrorMessage = "The {0} must be at least {2} and at max {1} characters long.", MinimumLength = 6)]
+            [StringLength(100, ErrorMessage = "The {0} must be at least {2} and at max {1} characters long.", MinimumLength = 5)]
             [DataType(DataType.Password)]
             [Display(Name = "Password")]
             public string Password { get; set; }
@@ -63,6 +65,7 @@ namespace Eventures.Areas.Identity.Pages.Account
             public string LastName { get; set; }
 
             [Required]
+            [RegularExpression("\\d{10}", ErrorMessage = "The {0} must be exactly 10 digits.")]
             [Display(Name = "Universal Citizen Number")]
             public string UCN { get; set; }
 
