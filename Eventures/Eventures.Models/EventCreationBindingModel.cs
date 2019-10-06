@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Eventures.Models.Validation;
+using System;
 using System.ComponentModel.DataAnnotations;
 
 namespace Eventures.Models
@@ -14,15 +15,17 @@ namespace Eventures.Models
         public string Place { get; set; }
 
 
-        //TO DO: Compate 
-        [Required]
+
+        [Required(ErrorMessage = "{0} cannot be empty!", AllowEmptyStrings = false)]
         public DateTime Start { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "{0} cannot be empty!", AllowEmptyStrings = false)]
+        [DataType(DataType.DateTime)]
+        [DateTimeNotBefore(nameof(Start))]
         public DateTime End { get; set; }
 
         [Required]
-        [Range(0, 100000, ErrorMessage = "The {0} count cannot be a negative number. Max is {2}.")]
+        [Range(0, int.MaxValue, ErrorMessage = "Invalid {0}!")]
         public int TotalTickets { get; set; }
 
         [Required]

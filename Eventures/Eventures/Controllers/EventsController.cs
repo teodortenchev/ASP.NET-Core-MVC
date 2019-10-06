@@ -49,7 +49,7 @@ namespace Eventures.Controllers
         {
             if(!ModelState.IsValid)
             {
-                return View();
+                return View(model);
             }
 
             eventsService.CreateEvent(model.Name, model.Place, model.Start, model.End, model.TotalTickets, model.TicketPrice);
@@ -63,6 +63,7 @@ namespace Eventures.Controllers
             return View();
         }
 
-        
+       
+
     }
 }
