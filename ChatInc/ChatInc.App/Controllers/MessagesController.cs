@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using ChatInc.Domain;
 using ChatInc.Models;
 using ChatInc.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -31,7 +32,8 @@ namespace ChatInc.App.Controllers
         {
             return messagesService.GetMessages();
         }
-  
+
+        [Authorize]
         [HttpPost]
         [Route("create")]
         public async Task<ActionResult> Create(MessageCreationBindingModel model)

@@ -34,6 +34,22 @@ namespace ChatInc.Data.Migrations
 
                     b.ToTable("Messages");
                 });
+
+            modelBuilder.Entity("ChatInc.Domain.User", b =>
+                {
+                    b.Property<string>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<string>("Password");
+
+                    b.Property<string>("Token");
+
+                    b.Property<string>("Username");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Users");
+                });
 #pragma warning restore 612, 618
         }
     }
