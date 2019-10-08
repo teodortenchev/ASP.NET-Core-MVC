@@ -1,32 +1,111 @@
 ﻿const appUrl = 'https://localhost:44358/api/';
 let currentUsername = null;
+let token = null;
 
 setInterval(loadMessages, 1000);
 
 
-$('#reset-data').hide();
+$('#loginform').hide();
+$('#registerform').hide();
+$('#loggedin-view').hide();
+
 loadMessages();
 
-function chooseUsername() {
-    let username = $('#username').val();
+function showRegister() {
+    $('#loginform').hide();
+    $('#registerform').show();
 
-    if (username.length === 0) {
-        alert('Username can\'t be empty');
+}
+
+function showLogin() {
+    $('#registerform').hide();
+    $('#loginform').show();
+
+}
+function showLoggedView() {
+    $('#loginform').hide();
+    $('#guest-view').hide();
+    $('#registerform').hide();
+    $('#loggedin-view').show();
+    
+    $('#username-choice').text(currentUsername);
+}
+
+function showGuestView() {
+    $('#loginform').hide();
+    $('#guest-view').hide();
+    $('#registerform').hide();
+    $('#loggedin-view').hide();
+    $('#guest-view').show();
+
+}
+
+function Login() {
+    let username = $('#loginusername').val();
+    let password = $('#loginpassword').val();
+
+
+    $.post({
+        url: appUrl + 'users/authenticate',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+
+        data: JSON.stringify({ username: username, password: password }),
+
+        success: function success(data) {
+            currentUsername = data.username;
+            showLoggedView();
+
+            token = data.token;
+            console.log('user ' + currentUsername);
+            console.log('token ' + token);
+        },
+        error: function error(error) {
+            console.log(error);
+        }
+    });
+
+}
+
+function Register() {
+    let username = $('#username').val();
+    let password = $('#password').val();
+
+    if (username.length === 0 || username.length < 4 || username.length > 50) {
+        alert('Invalid username');
         return;
     }
 
+    if (password.length === 0 || password.length < 6 || password.length > 50) {
+        alert('Invalid password');
+        return;
+    }
 
-    currentUsername = username;
-    $('#username-choice').text(currentUsername);
-    $('#choose-data').hide();
-    $('#reset-data').show();
+    $.post({
+        url: appUrl + 'users/create',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+
+        data: JSON.stringify({ username: username, password: password }),
+
+        success: function success(data) {
+            showLogin();
+        },
+        error: function error(error) {
+            console.log(error);
+        }
+    });
+
 }
 
-function resetUsername() {
-    currentUsername = null;
 
-    $('#choose-data').show();
-    $('#reset-data').hide();
+function Logout() {
+    currentUsername = null;
+    token = null;
+
+    showGuestView();
 }
 
 function renderMessages(data) {
@@ -59,7 +138,7 @@ function createMessage() {
 
 
     if (username == null) {
-        alert('Username must be selected.');
+        alert('Please log in to post messages.');
         return;
     }
 
@@ -73,6 +152,7 @@ function createMessage() {
     $.post({
         url: appUrl + 'messages/create',
         headers: {
+            'Authorization': 'Bearer ' + token,
             'Content-Type': 'application/json'
         },
 
@@ -86,3 +166,5 @@ function createMessage() {
         }
     });
 }
+
+
