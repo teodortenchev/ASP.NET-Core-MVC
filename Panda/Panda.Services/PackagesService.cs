@@ -17,9 +17,15 @@ namespace Panda.Services
             this.context = context;
         }
 
+
+        private Package GetPackage(string packageId)
+        {
+            return context.Packages.Include(x => x.Recipient).SingleOrDefault(x => x.Id == packageId);
+        }
+
         public string Acquire(string packageId, string username)
         {
-            Package package = context.Packages.Include(x => x.Recipient).SingleOrDefault(x => x.Id == packageId);
+            var package = GetPackage(packageId);
 
             if (package == null)
             {
@@ -35,6 +41,9 @@ namespace Panda.Services
 
             package.ShippingStatus = PackageStatus.Acquired;
 
+            context.Update(package);
+            context.SaveChanges();
+
             return package.Id;
         }
 
@@ -44,7 +53,7 @@ namespace Panda.Services
             {
                 Description = packageCreationBindingModel.Description,
                 Weight = packageCreationBindingModel.Weight,
-                Recipient = this.context.Users.SingleOrDefault(user => user.UserName == packageCreationBindingModel.Recipient),
+                Recipient = context.Users.SingleOrDefault(user => user.UserName == packageCreationBindingModel.Recipient),
                 ShippingAddress = packageCreationBindingModel.ShippingAddress,
                 ShippingStatus = PackageStatus.Pending
             };
@@ -55,16 +64,16 @@ namespace Panda.Services
 
         public void Deliver(string packageId)
         {
-            Package package = this.context.Packages.Find(packageId);
+            Package package = context.Packages.Find(packageId);
             package.ShippingStatus = PackageStatus.Delivered;
 
-            this.context.Update(package);
-            this.context.SaveChanges();
+            context.Update(package);
+            context.SaveChanges();
         }
 
         public PackageViewModel GetDetails(string packageId, string username, bool isAdmin)
         {
-            Package package = context.Packages.Include(x => x.Recipient).SingleOrDefault(x => x.Id == packageId);
+            var package = GetPackage(packageId);
 
             if (package == null)
             {
@@ -90,6 +99,21 @@ namespace Panda.Services
 
             return packageView;
 
+        }
+
+        public PackageReceiptDetailsModel GetInfoForReceipt(string packageId)
+        {
+            var package = GetPackage(packageId);
+
+            var packageDto = new PackageReceiptDetailsModel
+            {
+                PackageId = package.Id,
+                RecipientId = package.RecipientId,
+                Weight = package.Weight
+
+            };
+
+            return packageDto;
         }
 
         public IEnumerable<PackageViewModel> GetPackagesByShippingStatus(PackageStatus packageStatus)
@@ -126,7 +150,7 @@ namespace Panda.Services
 
         public void Ship(string packageId)
         {
-            Package package = this.context.Packages.Find(packageId);
+            Package package = context.Packages.Find(packageId);
             package.ShippingStatus = PackageStatus.Shipped;
 
             Random random = new Random();
@@ -134,8 +158,8 @@ namespace Panda.Services
             DateTime estimatedDelivery = DateTime.UtcNow.AddDays(random.Next(20, 40));
             package.EstimatedDeliveryDate = estimatedDelivery;
 
-            this.context.Update(package);
-            this.context.SaveChanges();
+            context.Update(package);
+            context.SaveChanges();
         }
     }
 }

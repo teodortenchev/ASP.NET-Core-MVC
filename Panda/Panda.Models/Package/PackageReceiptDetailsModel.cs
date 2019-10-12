@@ -1,13 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace Panda.Models.Package
+﻿namespace Panda.Models.Package
 {
     public class PackageReceiptDetailsModel
     {
-        string packageId;
-        string recipientId;
+        public string PackageId { get; set; }
+        public string RecipientId { get; set; }
+        public double Weight { get; set; }
 
     }
 }

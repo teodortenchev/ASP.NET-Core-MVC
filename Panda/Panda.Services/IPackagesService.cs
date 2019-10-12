@@ -14,6 +14,7 @@ namespace Panda.Services
         void Deliver(string packageId);
         PackageViewModel GetDetails(string packageId, string username, bool isAdmin);
         string Acquire(string packageId, string username);
+        PackageReceiptDetailsModel GetInfoForReceipt(string packageId);
 
     }
 }
