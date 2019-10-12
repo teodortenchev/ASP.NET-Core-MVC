@@ -112,21 +112,12 @@ namespace Panda.App.Controllers
 
             var userName = this.User.Identity.Name;
 
-            Package package = context.Packages.Include(x => x.Recipient).SingleOrDefault(x => x.Id == id);
+            string acquiredPackageId = packagesService.Acquire(id, userName);
 
-            if (package == null)
+            if (acquiredPackageId == null)
             {
-                this.Redirect("/");
+                return Redirect("/");
             }
-
-            //TODO: Find a better way to confirm user. Maybe with email or user id
-            if (package.ShippingStatus != PackageStatus.Delivered || package.Recipient.UserName != this.User.Identity.Name
-                || package.ShippingStatus == PackageStatus.Acquired)
-            {
-                return this.Redirect("/");
-            }
-
-            package.ShippingStatus = PackageStatus.Acquired;
 
             Receipt receipt = new Receipt()
             {

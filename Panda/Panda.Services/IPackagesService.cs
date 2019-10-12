@@ -12,8 +12,8 @@ namespace Panda.Services
         void CreatePackage(PackageCreationBindingModel packageCreationBindingModel);
         void Ship(string packageId);
         void Deliver(string packageId);
-        PackageViewModel GetDetails(string packageId, string username, bool isUserRole);
-
+        PackageViewModel GetDetails(string packageId, string username, bool isAdmin);
+        string Acquire(string packageId, string username);
 
     }
 }

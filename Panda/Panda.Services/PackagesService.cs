@@ -17,6 +17,27 @@ namespace Panda.Services
             this.context = context;
         }
 
+        public string Acquire(string packageId, string username)
+        {
+            Package package = context.Packages.Include(x => x.Recipient).SingleOrDefault(x => x.Id == packageId);
+
+            if (package == null)
+            {
+                return null;
+            }
+
+            //TODO: Find a better way to confirm user. Maybe with email or user id
+            if (package.ShippingStatus != PackageStatus.Delivered || package.Recipient.UserName != username
+                || package.ShippingStatus == PackageStatus.Acquired)
+            {
+                return null;
+            }
+
+            package.ShippingStatus = PackageStatus.Acquired;
+
+            return package.Id;
+        }
+
         public void CreatePackage(PackageCreationBindingModel packageCreationBindingModel)
         {
             Package package = new Package
