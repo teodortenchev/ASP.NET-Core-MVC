@@ -20,5 +20,6 @@ namespace Panda.Services
             var usernames = context.Users.Select(x => x.UserName).OrderBy(x => x).ToList();
 
             return usernames;
+        }
     }
 }

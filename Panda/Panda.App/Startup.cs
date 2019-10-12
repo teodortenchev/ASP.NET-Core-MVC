@@ -8,6 +8,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Panda.Data;
 using Panda.Domain;
+using Panda.Services;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -45,6 +46,10 @@ namespace Panda.App
 
                 options.User.RequireUniqueEmail = true;
             });
+
+            services.AddTransient<IUsersService, UsersService>();
+            services.AddTransient<IPackagesService, PackagesService>();
+            services.AddTransient<IReceiptService, ReceiptService>();
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
 
