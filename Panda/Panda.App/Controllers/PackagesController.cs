@@ -93,8 +93,8 @@ namespace Panda.App.Controllers
         public IActionResult Details(string id)
         {
             var isAdmin = User.IsInRole("Admin");
-            var userName = User.Identity.Name;
-            var packageView = packagesService.GetDetails(id, userName, isAdmin);
+            var username = User.Identity.Name;
+            var packageView = packagesService.GetDetails(id, username, isAdmin);
 
             if (packageView == null)
             {
@@ -108,9 +108,9 @@ namespace Panda.App.Controllers
         [Authorize]
         public IActionResult Acquire(string id)
         {
-            var userName = User.Identity.Name;
+            var username = User.Identity.Name;
 
-            string acquiredPackageId = packagesService.Acquire(id, userName);
+            string acquiredPackageId = packagesService.Acquire(id, username);
 
             if (acquiredPackageId == null)
             {

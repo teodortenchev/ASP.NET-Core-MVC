@@ -14,7 +14,7 @@ namespace Panda.App.Controllers
 
         public IActionResult Index()
         {
-            var packagesList = packagesService.GetPackagesForUser(this.User.Identity.Name);
+            var packagesList = packagesService.GetPackagesForUser(User.Identity.Name);
 
             return View(packagesList);
         }
@@ -22,7 +22,7 @@ namespace Panda.App.Controllers
      
         public IActionResult NotAuthorized()
         {
-            return this.View();
+            return View();
         }
 
         
