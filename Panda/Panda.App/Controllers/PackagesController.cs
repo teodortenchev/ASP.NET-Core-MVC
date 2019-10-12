@@ -1,9 +1,9 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using Panda.App.Models.Package;
-using Panda.Data;
 using Panda.Domain;
+using Panda.Models.Package;
+using Panda.Services;
 using System;
 using System.Linq;
 
@@ -11,21 +11,20 @@ namespace Panda.App.Controllers
 {
     public class PackagesController : Controller
     {
-        //TODO: Better create a service. Only doing like this to save time right now
-        private readonly PandaDbContext context;
+        private readonly IPackagesService packagesService;
+        private readonly IUsersService usersService;
 
 
-
-        public PackagesController(PandaDbContext context)
+        public PackagesController(IPackagesService packagesService, IUsersService usersService)
         {
-            this.context = context;
+            this.packagesService = packagesService;
+            this.usersService = usersService;
         }
-
 
         [Authorize(Roles = "Admin")]
         public IActionResult Create()
         {
-            this.ViewData["Recipients"] = this.context.Users.ToList();
+            this.ViewData["Recipients"] = usersService.ReturnUsernames();
 
             return this.View();
         }
@@ -39,17 +38,7 @@ namespace Panda.App.Controllers
                 return this.RedirectToAction();
             }
 
-            Package package = new Package
-            {
-                Description = bindingModel.Description,
-                Weight = bindingModel.Weight,
-                Recipient = this.context.Users.SingleOrDefault(user => user.UserName == bindingModel.Recipient),
-                ShippingAddress = bindingModel.ShippingAddress,
-                ShippingStatus = PackageStatus.Pending
-            };
-
-            context.Packages.Add(package);
-            context.SaveChanges();
+            packagesService.CreatePackage(bindingModel);
 
             return this.Redirect("/Packages/Pending");
         }
@@ -58,38 +47,16 @@ namespace Panda.App.Controllers
         [Authorize(Roles = "Admin")]
         public IActionResult Pending()
         {
-            var packagesViewModel = context.Packages
-                .Where(package => package.ShippingStatus == PackageStatus.Pending)
-                .Select(package =>
-                       new PackageViewModel
-                       {
-                           Id = package.Id,
-                           Description = package.Description,
-                           Weight = package.Weight,
-                           ShippingAddress = package.ShippingAddress,
-                           Recipient = package.Recipient.UserName
-                       });
+            var packagesViewModel = packagesService.GetPackagesByShippingStatus(PackageStatus.Pending);
 
-
-            return this.View(packagesViewModel.ToList());
+            return this.View(packagesViewModel);
         }
 
         [HttpGet]
         [Authorize(Roles = "Admin")]
         public IActionResult Shipped()
         {
-            var packagesViewModel = context.Packages
-                .Where(package => package.ShippingStatus == PackageStatus.Shipped)
-                .Select(package =>
-                       new PackageViewModel
-                       {
-                           Id = package.Id,
-                           Description = package.Description,
-                           Weight = package.Weight,
-                           EstimatedDeliveryDate = package.EstimatedDeliveryDate.Value.ToString("dd/MM/yyyy"),
-                           Recipient = package.Recipient.UserName
-                       });
-
+            var packagesViewModel = packagesService.GetPackagesByShippingStatus(PackageStatus.Shipped);
 
             return this.View(packagesViewModel.ToList());
         }
@@ -98,18 +65,7 @@ namespace Panda.App.Controllers
         [Authorize(Roles = "Admin")]
         public IActionResult Delivered()
         {
-            var packagesViewModel = context.Packages
-                .Where(package => package.ShippingStatus == PackageStatus.Delivered || package.ShippingStatus == PackageStatus.Acquired)
-                .Select(package =>
-                       new PackageViewModel
-                       {
-                           Id = package.Id,
-                           Description = package.Description,
-                           Weight = package.Weight,
-                           ShippingAddress = package.ShippingAddress,
-                           Recipient = package.Recipient.UserName
-                       });
-
+            var packagesViewModel = packagesService.GetPackagesByShippingStatus(PackageStatus.Delivered);
 
             return this.View(packagesViewModel.ToList());
         }
@@ -119,17 +75,7 @@ namespace Panda.App.Controllers
         [Authorize(Roles = "Admin")]
         public IActionResult Ship(string id)
         {
-            Package package = this.context.Packages.Find(id);
-            package.ShippingStatus = PackageStatus.Shipped;
-
-            Random random = new Random();
-
-            DateTime estimatedDelivery = DateTime.UtcNow.AddDays(random.Next(20, 40));
-            package.EstimatedDeliveryDate = estimatedDelivery;
-
-
-            this.context.Update(package);
-            this.context.SaveChanges();
+            packagesService.Ship(id);
 
             return this.Redirect("/Packages/Shipped");
         }
@@ -138,11 +84,7 @@ namespace Panda.App.Controllers
         [Authorize(Roles = "Admin")]
         public IActionResult Deliver(string id)
         {
-            Package package = this.context.Packages.Find(id);
-            package.ShippingStatus = PackageStatus.Delivered;
-
-            this.context.Update(package);
-            this.context.SaveChanges();
+            packagesService.Deliver(id);
 
             return this.Redirect("/Packages/Delivered");
         }
@@ -151,30 +93,14 @@ namespace Panda.App.Controllers
         [Authorize(Roles = "User, Admin")]
         public IActionResult Details(string id)
         {
-            Package package = context.Packages.Include(x => x.Recipient).SingleOrDefault(x => x.Id == id);
+            var isAdmin = this.User.IsInRole("Admin");
+            var userName = this.User.Identity.Name;
+            var packageView = packagesService.GetDetails(id, userName, isAdmin);
 
-            if (package == null)
+            if (packageView == null)
             {
                 return this.Redirect("Home/Index");
             }
-
-            if (this.User.IsInRole("User") && package.Recipient.UserName != this.User.Identity.Name)
-            {
-                return this.Redirect("Home/Index");
-            }
-
-            var packageView = new PackageViewModel()
-            {
-                Id = package.Id,
-                Description = package.Description,
-                EstimatedDeliveryDate = package.EstimatedDeliveryDate == null ? "N/A" : package.EstimatedDeliveryDate.Value.ToString("dd/MM/yyyy", System.Globalization.CultureInfo.InvariantCulture),
-                Recipient = package.Recipient.UserName,
-                ShippingAddress = package.ShippingAddress,
-                Weight = package.Weight,
-                Status = package.ShippingStatus.ToString()
-
-            };
-
 
             return this.View(packageView);
         }
@@ -183,6 +109,9 @@ namespace Panda.App.Controllers
         [Authorize]
         public IActionResult Acquire(string id)
         {
+
+            var userName = this.User.Identity.Name;
+
             Package package = context.Packages.Include(x => x.Recipient).SingleOrDefault(x => x.Id == id);
 
             if (package == null)

@@ -1,5 +1,5 @@
 ﻿@using Panda.Domain
-@model Panda.App.Models.Package.PackageCreationBindingModel
+@model Panda.Models.Package.PackageCreationBindingModel
 
 @{
     ViewData["Title"] = "Create";
@@ -34,9 +34,9 @@
             </div>
             <select class="custom-select" id="recipient" asp-for="Recipient">
                 <option selected disabled>-- Choose Recipient --</option>
-                @foreach (var recipient in (List<PandaUser>)ViewData["Recipients"])
+                @foreach (var recipient in (List<string>)ViewData["Recipients"])
                 {
-                    <option value="@recipient.UserName">@recipient.UserName</option>
+                    <option value="@recipient">@recipient</option>
                 }
             </select>
             <span asp-validation-for="Recipient" class="text-danger"></span>

@@ -72,7 +72,7 @@ namespace Panda.App.Areas.Identity.Pages.Account
 
                 var result = await _userManager.CreateAsync(user, Input.Password);
                 
-                //TODO: Make admin
+                
                 if(_userManager.Users.Count() == 1)
                 {
                     await _userManager.AddToRoleAsync(user, "Admin");
