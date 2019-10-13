@@ -3,5 +3,5 @@
 **/.vs
 **/*.zip
 ChatInc/ChatInc.App/appsettings.json
-Panda/.vs/Panda/v16/.suo
-Panda/.vs/Panda/v16/.suo
+Panda/.vs/*
+
