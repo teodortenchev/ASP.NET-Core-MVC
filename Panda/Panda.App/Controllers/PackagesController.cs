@@ -14,10 +14,11 @@ namespace Panda.App.Controllers
         private readonly IReceiptService receiptService;
 
 
-        public PackagesController(IPackagesService packagesService, IUsersService usersService)
+        public PackagesController(IPackagesService packagesService, IUsersService usersService, IReceiptService receiptService)
         {
             this.packagesService = packagesService;
             this.usersService = usersService;
+            this.receiptService = receiptService;
         }
 
         [Authorize(Roles = "Admin")]
