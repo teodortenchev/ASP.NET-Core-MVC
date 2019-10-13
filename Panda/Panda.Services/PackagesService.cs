@@ -127,7 +127,9 @@ namespace Panda.Services
                            Description = package.Description,
                            Weight = package.Weight,
                            ShippingAddress = package.ShippingAddress,
-                           Recipient = package.Recipient.UserName
+                           Recipient = package.Recipient.UserName,
+                           EstimatedDeliveryDate = package.EstimatedDeliveryDate == null ? "N/A" : package.EstimatedDeliveryDate.Value.ToString("dd/MM/yyyy", System.Globalization.CultureInfo.InvariantCulture)
+                           
                        }).ToList();
 
             return packagesList;
