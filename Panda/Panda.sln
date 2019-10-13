@@ -9,11 +9,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Panda.Data", "Panda.Data\Pa
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Panda.Domain", "Panda.Domain\Panda.Domain.csproj", "{D1D28C92-0C4D-4ED1-917E-908FA50E0540}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Panda.App.Tests", "Panda.App.Tests\Panda.App.Tests.csproj", "{0491B285-0E31-4590-BD0C-7DDD4A6D8BAD}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Panda.Services", "Panda.Services\Panda.Services.csproj", "{A78FAD92-BF9A-49C2-BABE-4A05F59FC603}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Panda.Services", "Panda.Services\Panda.Services.csproj", "{A78FAD92-BF9A-49C2-BABE-4A05F59FC603}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Panda.Models", "Panda.Models\Panda.Models.csproj", "{C1F0D8F8-2A57-4E4F-836D-1E1B0D16A810}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Panda.Models", "Panda.Models\Panda.Models.csproj", "{C1F0D8F8-2A57-4E4F-836D-1E1B0D16A810}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Panda.Services.Tests", "Panda.Services.Tests\Panda.Services.Tests.csproj", "{5B5293CD-E002-43D6-906A-AA3A60DF05B0}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -33,10 +33,6 @@ Global
 		{D1D28C92-0C4D-4ED1-917E-908FA50E0540}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D1D28C92-0C4D-4ED1-917E-908FA50E0540}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D1D28C92-0C4D-4ED1-917E-908FA50E0540}.Release|Any CPU.Build.0 = Release|Any CPU
-		{0491B285-0E31-4590-BD0C-7DDD4A6D8BAD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{0491B285-0E31-4590-BD0C-7DDD4A6D8BAD}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{0491B285-0E31-4590-BD0C-7DDD4A6D8BAD}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{0491B285-0E31-4590-BD0C-7DDD4A6D8BAD}.Release|Any CPU.Build.0 = Release|Any CPU
 		{A78FAD92-BF9A-49C2-BABE-4A05F59FC603}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{A78FAD92-BF9A-49C2-BABE-4A05F59FC603}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A78FAD92-BF9A-49C2-BABE-4A05F59FC603}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -45,6 +41,10 @@ Global
 		{C1F0D8F8-2A57-4E4F-836D-1E1B0D16A810}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C1F0D8F8-2A57-4E4F-836D-1E1B0D16A810}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C1F0D8F8-2A57-4E4F-836D-1E1B0D16A810}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5B5293CD-E002-43D6-906A-AA3A60DF05B0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5B5293CD-E002-43D6-906A-AA3A60DF05B0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5B5293CD-E002-43D6-906A-AA3A60DF05B0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5B5293CD-E002-43D6-906A-AA3A60DF05B0}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
