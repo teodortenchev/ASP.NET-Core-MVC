@@ -48,7 +48,7 @@ namespace Panda.Services.Tests
         }
 
         [Fact]
-        public async Task ReturnNullWithNoUsersWithoutThrowingError()
+        public async Task ReturnEmptyListWithNoUsersWithoutThrowingError()
         {
             var dbContext = await GetDbContext();
 
@@ -61,10 +61,8 @@ namespace Panda.Services.Tests
             var service = new UsersService(dbContext);
 
             var actual = service.ReturnUsernames();
-
-            IEnumerable<string> expected = new List<string> { "user1", "user2" };
-
-            Assert.Equal(expected, actual);
+      
+            Assert.Empty(actual);
         }
     }
 }
